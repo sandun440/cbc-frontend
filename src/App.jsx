@@ -1,19 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import Productcard from './component/Productcard'
-import Homepage from './pages/Homepage'
+import UserData from './component/UserData'
+import Testing from './component/Testing'
+import HomePage from './pages/Homepage'
+import LoginPage from './pages/Loginpage'
+import SignupPage from './pages/SignupPage'
+import AdminHomePage from './pages/AdminHomePage'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      {/* <Productcard name ="Gaming Laptop" price = "$999.99"/>
-      <Productcard name = "I phone 16" price = "$599.99"/> */}
+      <BrowserRouter>
 
-      <Homepage/>
+        <Routes path="/*">
+
+          <Route path="/" element={<HomePage/>} />
+
+          <Route path="/login" element = {<LoginPage/>} />
+          <Route path="/signup" element ={<SignupPage/>}/>
+
+          <Route path = "/admin/*" element = {<AdminHomePage/>}/>
+
+          <Route path="/*" element={<HomePage/>} />
+        </Routes>
+
+      </BrowserRouter>
     </>
   )
 }
