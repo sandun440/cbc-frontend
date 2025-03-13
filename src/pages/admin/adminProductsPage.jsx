@@ -74,7 +74,7 @@ export default function AdminProductsPage() {
               </tbody>
             </table>
           </div>:<div className="w-full flex justify-between items-center">
-            <div className="w-[60px] h-[60px] ml-[300px] border-[4px] border-gray-100  border-b-[#3b82f6] rounded-full animate-spin"></div>
+            <div className="w-[60px] h-[60px] border-[4px] border-gray-100  border-b-[#3b82f6] rounded-full animate-spin"></div>
           </div>
           }
           
