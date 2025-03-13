@@ -20,7 +20,7 @@ export default function AddProductForm() {
         const product = {
             productId : productId,
             productName : productName,
-            atlNames : altnames,
+            altNames : altnames,
             images : imgUrls,
             price : price,
             lastPrice : lastPrice,
@@ -29,6 +29,7 @@ export default function AddProductForm() {
         }
 
         const token = localStorage.getItem("token");
+  
         try {
             await axios.post("http://localhost:3000/api/products", product, {
                 headers: {
