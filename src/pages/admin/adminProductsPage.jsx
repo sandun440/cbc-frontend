@@ -43,9 +43,14 @@ export default function AdminProductsPage() {
                       {product.description}
                     </td>
                     <td className="px-6 py-4 flex justify-center space-x-2">
-                      <button className="text-red-500 hover:text-red-700 p-2">
+                      <button className="text-red-500 hover:text-red-700 p-2" 
+                      title="delete"
+                      onClick={() => {
+                        alert(product.productId)
+                      }}>
                         <FaTrash size={16} />
                       </button>
+                      
                       <button className="text-blue-500 hover:text-blue-700 p-2">
                         <FaPencil size={16} />
                       </button>
