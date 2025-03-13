@@ -1,16 +1,21 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { FaPencil, FaPlus, FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 export default function AdminProductsPage() {
   const [products, setProduct] = useState([]);
+  const [productsloaded, setProductsLoaded] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/products").then((res) => {
-      setProduct(res.data);
-    });
-  }, []);
+    if(!productsloaded){
+      axios.get("http://localhost:3000/api/products").then((res) => {
+        setProduct(res.data);
+        setProductsLoaded(true);
+      });
+    }
+  }, [productsloaded]);
 
   return (
     <div className="flex min-h-screen bg-gray-100 relative">
@@ -18,7 +23,8 @@ export default function AdminProductsPage() {
       <div className="flex-1 p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Products Page</h1>
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="overflow-x-auto">
+          {
+            productsloaded?<div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-gray-200 text-gray-700 text-left">
@@ -46,7 +52,15 @@ export default function AdminProductsPage() {
                       <button className="text-red-500 hover:text-red-700 p-2" 
                       title="delete"
                       onClick={() => {
-                        alert(product.productId)
+                        const token = localStorage.getItem("token");
+                        axios.delete(`http://localhost:3000/api/products/${product.productId}`, {
+                          headers: {
+                            Authorization: "Bearer " + token
+                          }
+                        }).then(res => {
+                          toast.success("Product deleted successfully")
+                          setProductsLoaded(false);
+                        })
                       }}>
                         <FaTrash size={16} />
                       </button>
@@ -59,7 +73,11 @@ export default function AdminProductsPage() {
                 ))}
               </tbody>
             </table>
+          </div>:<div className="w-full flex justify-between items-center">
+            <div className="w-[60px] h-[60px] ml-[300px] border-[4px] border-gray-100  border-b-[#3b82f6] rounded-full animate-spin"></div>
           </div>
+          }
+          
         </div>
       </div>
     </div>
