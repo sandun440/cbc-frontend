@@ -4,7 +4,7 @@ import LoginPage from './pages/Loginpage'
 import SignupPage from './pages/SignupPage'
 import AdminHomePage from './pages/AdminHomePage'
 import { Toaster } from 'react-hot-toast'
-import HomePage from './pages/HomePage'
+import HomePage from './pages/Homepage'
 
 function App() {
   const [count, setCount] = useState(0)
