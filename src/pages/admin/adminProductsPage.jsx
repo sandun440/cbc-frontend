@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaPencil, FaPlus, FaTrash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminProductsPage() {
   const [products, setProduct] = useState([]);
@@ -16,6 +16,8 @@ export default function AdminProductsPage() {
       });
     }
   }, [productsloaded]);
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex min-h-screen bg-gray-100 relative">
@@ -65,7 +67,13 @@ export default function AdminProductsPage() {
                         <FaTrash size={16} />
                       </button>
                       
-                      <button className="text-blue-500 hover:text-blue-700 p-2">
+                      <button className="text-blue-500 hover:text-blue-700 p-2"
+                      title="edit"
+                      onClick={()=>{
+                        //move to editProduct page
+                        navigate("/admin/products/editProduct", {state : {product : product}});
+                      }}
+                      >
                         <FaPencil size={16} />
                       </button>
                     </td>
