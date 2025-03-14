@@ -18,7 +18,7 @@ export default function uploadMediaToSupabase(file){
 
         const timestamp = new Date().getTime();
 
-        fileName = timestamp + "." + extention ;
+        fileName = timestamp + fileName + "." + extention ;
 
         supabase.storage.from("images").upload(fileName, file,{
             cacheControl : "3600",
