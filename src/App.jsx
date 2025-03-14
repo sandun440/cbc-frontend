@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/Loginpage'
 import SignupPage from './pages/SignupPage'
 import AdminHomePage from './pages/AdminHomePage'
 import { Toaster } from 'react-hot-toast'
