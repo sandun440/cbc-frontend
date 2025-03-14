@@ -25,7 +25,7 @@ export default function AdminHomePage() {
             {/* Main Content Area */}
             <div className="w-[80%] h-screen">
                 <Routes path="/*">
-                    <Route path="/dashboard" element={<h1>Dashbord</h1>} />
+                    <Route path="/" element={<h1>Dashbord</h1>} />
                     <Route path="/products" element={<AdminProductsPage/>}/>
                     <Route path="/products/addProducts" element={<AddProductForm/>} />
                     <Route path="/orders" element={<h1>Orders</h1>} />
