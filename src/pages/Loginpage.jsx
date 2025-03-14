@@ -29,7 +29,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className=" w-full h-screen bg-red-900 flex justify-center items-center">
+    <div className=" w-full h-screen bg-primary flex justify-center items-center">
       <div className= "w-[450px] h-[450px] bg-blue-600 flex flex-col justify-center items-center" >
 
         <img src='/logo.jpg' className="rounded-full w-[100px]"/>
