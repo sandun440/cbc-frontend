@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.0.12",
     "@supabase/supabase-js": "^2.49.1",
-    "@tailwindcss/vite": "^4.0.9",
     "axios": "^1.8.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
