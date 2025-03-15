@@ -44,8 +44,8 @@ export default function AdminProductsPage() {
                   <tr key={index} className="border-b hover:bg-gray-100">
                     <td className="px-6 py-4">{product.productId}</td>
                     <td className="px-6 py-4 font-semibold">{product.productName}</td>
-                    <td className="px-6 py-4 text-green-600 font-bold">${product.price}</td>
-                    <td className="px-6 py-4 line-through text-red-500">${product.lastPrice}</td>
+                    <td className="px-6 py-4 line-through text-red-500">${product.price}</td>
+                    <td className="px-6 py-4 text-green-600 font-bold">${product.lastPrice}</td>
                     <td className="px-6 py-4 text-blue-600 font-semibold">{product.stock}</td>
                     <td className="px-6 py-4 text-sm text-gray-600 truncate max-w-xs">
                       {product.description}
@@ -63,7 +63,8 @@ export default function AdminProductsPage() {
                           toast.success("Product deleted successfully")
                           setProductsLoaded(false);
                         })
-                      }}>
+                      }}
+                      >
                         <FaTrash size={16} />
                       </button>
                       
