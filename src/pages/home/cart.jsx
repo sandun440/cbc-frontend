@@ -16,8 +16,10 @@ export default function Cart() {
             }).then(
                 (res)=>{
                     console.log(res.data);
-                    setTotal(res.data.total);
-                    setLabeledTotal(res.data.labeledTotal);
+                    if(res.data.message != null){
+                        setTotal(res.data.total);
+                        setLabeledTotal(res.data.labeledTotal);
+                    }
             })
         }
     ,[])

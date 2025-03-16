@@ -102,7 +102,7 @@ export default function AddProductForm() {
   
             {/* Image URLs */}
             <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Image URLs</label>
+              <label className="text-gray-600 font-medium">Images</label>
               <input 
                 type="file" 
                 placeholder="Enter image URLs (commas separated)"

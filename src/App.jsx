@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import HomePage from './pages/Homepage'
+import HomePage from './pages/HomePage'
 import LoginPage from './pages/Loginpage'
 import SignupPage from './pages/SignupPage'
 import AdminHomePage from './pages/AdminHomePage'
 import { Toaster } from 'react-hot-toast'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
     <>
       <BrowserRouter>
       <Toaster position="top-right" reverseOrder={false} />
+      <GoogleOAuthProvider
+        clientId='201774715224-55rfpuok2fpbi3g50j3tn8miundopar3.apps.googleusercontent.com'
+      >
 
         <Routes path="/*">
 
@@ -24,7 +28,7 @@ function App() {
 
           <Route path="/*" element={<HomePage/>} />
         </Routes>
-
+        </GoogleOAuthProvider>
       </BrowserRouter>
     </>
   )

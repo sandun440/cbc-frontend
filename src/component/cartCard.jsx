@@ -20,6 +20,7 @@ export default function CartCard(props) {
                             setLoading(true)
                         }else{
                             deleteItem(productId)
+                            window.location.reload()
                         }
                 }).catch((err)=>{
                     toast.error("Error loading product")
