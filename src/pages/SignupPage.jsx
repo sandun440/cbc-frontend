@@ -58,7 +58,7 @@ export default function SignUpPage() {
           
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="w-full bg-accent text-white py-2 px-4 rounded-md hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-accent-light focus:ring-offset-2"
           >
             Sign Up
           </button>
@@ -66,7 +66,7 @@ export default function SignUpPage() {
         
         <div className="text-center mt-6 text-sm text-gray-600">
           Already have an account? {' '}
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link to="/login" className="font-medium text-accent hover:text-accent-light">
             Sign In
           </Link>
         </div>
