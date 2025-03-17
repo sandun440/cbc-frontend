@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { loadCart } from "../../utils/cartFunction";
+import { deleteItem, loadCart } from "../../utils/cartFunction";
 import CartCard from "../../component/cartCard";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export default function Cart() {
             }).then(
                 (res)=>{
                     console.log(res.data);
-                    if(res.data.message != null){
+                    if(res.data.total != null){
                         setTotal(res.data.total);
                         setLabeledTotal(res.data.labeledTotal);
                     }
@@ -67,10 +67,12 @@ export default function Cart() {
                     )
                 }
             </table>
-            <h1 className="text-3xl font-bold text-accent">Total: LKR. {labeledTotal.toFixed(2)}</h1>
-            <h1 className="text-3xl font-bold text-accent">Discount: LKR. {total.toFixed(2)}</h1>
-            <h1 className="text-3xl font-bold text-accent">Grand Total: LKR. {(labeledTotal-total).toFixed(2)}</h1>
-            <button onClick={onOrderCheckoutClick} className="bg-accent hover:bg-accent-light text-white p-2 rounded-lg w-[300px]">Checkout</button>
+            <div className=" w-[400px] flex flex-col items-center ">
+                <h1 className="text-3xl font-bold text-accent">Total: LKR. {labeledTotal.toFixed(2)}</h1>
+                <h1 className="text-3xl font-bold text-accent">Discount: LKR. {total.toFixed(2)}</h1>
+                <h1 className="text-3xl font-bold text-accent">Grand Total: LKR. {(labeledTotal-total).toFixed(2)}</h1>
+                <button onClick={onOrderCheckoutClick} className="bg-accent hover:bg-accent-light hover:text-black text-white p-2 rounded-lg w-[300px]">Checkout</button>
+            </div>
         </div>
     )
 }
