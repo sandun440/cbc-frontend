@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import ProductNotFound from "./productNotFound";
 import ImageSlider from "../../component/imageSlider";
 import { addToCart } from "../../utils/cartFunction";
@@ -11,6 +11,7 @@ export default function ProductOverview() {
     const productId = params.id;
     const [product, setProduct] = useState(null);
     const [status, setStatus] = useState("loading");
+    const navigate = useNavigate();
 
     useEffect(
         ()=>{
@@ -34,6 +35,19 @@ export default function ProductOverview() {
         function onAddtoCartClick(){
             addToCart(product.productId, 1)
             toast.success(product.productId+" Added to cart")
+        }
+        function onBuyNowClick(){
+            navigate("/shipping", {
+                state : {
+                    items : [
+                        {
+                            productId : product.productId,
+                            qty : 1
+                        }
+                    ]
+                }
+            })
+
         }
 
     return(
@@ -73,6 +87,7 @@ export default function ProductOverview() {
                             </p>
                             <p className="text-lg text-gray-600 line-clamp-3">{product.description}</p>
                             <button className="bg-accent text-white p-2 rounded-lg" onClick={onAddtoCartClick}>Add to Cart</button>
+                            <button className="text-accent border mx-1 border-accent p-2 rounded-lg" onClick={onBuyNowClick}> Buy Now</button>
                         </div>
                     </div>
                 )
