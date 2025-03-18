@@ -41,7 +41,6 @@ export default function MyOrdersPage() {
   const closeModal = () => {
     setSelectedOrder(null);
   };
-  console.log(orders)
   return (
     <div className="w-full h-full flex flex-col items-center p-4">
       <h1 className="text-xl font-bold mb-4">My Orders</h1>
@@ -82,7 +81,7 @@ export default function MyOrdersPage() {
 
       {/* Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-950/50 flex items-center justify-center z-50">
           <div className="bg-white w-full max-w-md p-4 rounded-lg shadow-lg">
             <h2 className="text-lg font-bold mb-4">Order Details</h2>
             <p>
@@ -121,7 +120,7 @@ export default function MyOrdersPage() {
                   </p>
                   <p>
                     <span className="font-semibold">Price:</span> LKR{" "}
-                    {item.price.toFixed(2)}
+                    {Number(item.price).toFixed(2)}
                   </p>
                   <p>
                     <span className="font-semibold">Quantity:</span>{" "}

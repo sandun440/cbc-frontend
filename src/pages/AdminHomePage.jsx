@@ -4,6 +4,7 @@ import { BsGraphUp, BsBoxSeam, BsClipboardData, BsPeople } from "react-icons/bs"
 import AdminProductsPage from "./admin/adminProductsPage";
 import AddProductForm from "./admin/addProductFrom";
 import EditProductForm from "./admin/editProductForm";
+import AdminOrdersPage from "./admin/adminOrderPage";
 
 export default function AdminHomePage() {
     return (
@@ -30,7 +31,7 @@ export default function AdminHomePage() {
                     <Route path="/products" element={<AdminProductsPage/>}/>
                     <Route path="/products/addProducts" element={<AddProductForm/>} />
                     <Route path ="/products/editProduct" element={<EditProductForm/>}/>
-                    <Route path="/orders" element={<h1>Orders</h1>} />
+                    <Route path="/orders" element={<AdminOrdersPage/>} />
                     <Route path="/customers" element={<h1>Customers</h1>} />
                     <Route path = "/*" element = {<h1>404 not found</h1>}/>
                 </Routes>
