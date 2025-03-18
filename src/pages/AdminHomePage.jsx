@@ -1,12 +1,42 @@
-import React from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { BsGraphUp, BsBoxSeam, BsClipboardData, BsPeople } from "react-icons/bs";
 import AdminProductsPage from "./admin/adminProductsPage";
 import AddProductForm from "./admin/addProductFrom";
 import EditProductForm from "./admin/editProductForm";
 import AdminOrdersPage from "./admin/adminOrderPage";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AdminHomePage() {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+            const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+        axios.get(import.meta.env.VITE_BACKEND_URL + "/api/users", {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            })
+            .then((res) => {
+                if(res.data.type != "admin"){
+                    toast.error("You are not authorized to access this page.");
+                    navigate("/login");
+                }else{
+                    setUser(res.data);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error("Failed to fetch user data.");
+                navigate("/login");
+            });
+        },[])
     return (
         <div className="bg-blue-200 w-full h-screen flex">
             {/* Sidebar */}
@@ -26,7 +56,8 @@ export default function AdminHomePage() {
             </div>
             {/* Main Content Area */}
             <div className="w-[80%] h-screen">
-                <Routes path="/*">
+
+                {user!=null&&<Routes path="/*">
                     <Route path="/" element={<h1>Dashbord</h1>} />
                     <Route path="/products" element={<AdminProductsPage/>}/>
                     <Route path="/products/addProducts" element={<AddProductForm/>} />
@@ -34,7 +65,13 @@ export default function AdminHomePage() {
                     <Route path="/orders" element={<AdminOrdersPage/>} />
                     <Route path="/customers" element={<h1>Customers</h1>} />
                     <Route path = "/*" element = {<h1>404 not found</h1>}/>
-                </Routes>
+                </Routes>}
+                {
+                    user==null&&<div className="w-full h-full flex justify-center items-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-t-2 border-accent"></div>
+                    </div>
+
+                }
             </div>
         </div>
     );
