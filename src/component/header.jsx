@@ -20,6 +20,11 @@ export default function Header() {
                 <Link to="/contact" className="text-accent font-bold text-xl hover:border-b border-b-accent">Contact Us</Link>
                 <Link to="/cart" className="text-accent font-bold text-xl hover:border-b border-b-accent">cart</Link>
             </div>
+            <div className="absolute w-[200px] h-full flex-row items-center justify-around right-[10px] hidden lg:flex">
+                <Link to="/login" className="text-white bg-accent p-2 rounded-xl font-bold text-xl hover:bg-accent-light">Login</Link>
+                <Link to="/signup" className="text-accent font-bold text-xl border p-2 rounded-xl hover:bg-accent-light">Signup</Link>
+
+            </div>
 
 
 

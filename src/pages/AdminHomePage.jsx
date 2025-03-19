@@ -7,6 +7,8 @@ import EditProductForm from "./admin/editProductForm";
 import AdminOrdersPage from "./admin/adminOrderPage";
 import axios from "axios";
 import toast from "react-hot-toast";
+import AdminUserDetails from "./admin/adminUserDetails";
+import AdminDashboardPage from "./admin/adminDashboard";
 
 export default function AdminHomePage() {
     const [user, setUser] = useState(null);
@@ -58,12 +60,12 @@ export default function AdminHomePage() {
             <div className="w-[80%] h-screen">
 
                 {user!=null&&<Routes path="/*">
-                    <Route path="/" element={<h1>Dashbord</h1>} />
+                    <Route path="/dashboard" element={<AdminDashboardPage/>} />
                     <Route path="/products" element={<AdminProductsPage/>}/>
                     <Route path="/products/addProducts" element={<AddProductForm/>} />
                     <Route path ="/products/editProduct" element={<EditProductForm/>}/>
                     <Route path="/orders" element={<AdminOrdersPage/>} />
-                    <Route path="/customers" element={<h1>Customers</h1>} />
+                    <Route path="/customers" element={<AdminUserDetails/>} />
                     <Route path = "/*" element = {<h1>404 not found</h1>}/>
                 </Routes>}
                 {
