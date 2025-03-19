@@ -1,4 +1,6 @@
-import { IoMdClose } from "react-icons/io";
+import { AiFillProduct } from "react-icons/ai";
+import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { IoIosContacts, IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 export default function NavSlider(props) {
@@ -9,13 +11,36 @@ export default function NavSlider(props) {
                 <img src="/logo.png" className="absolute h-full rounded-full cursor-pointer left-[10px]" />
                 <IoMdClose onClick={closeSlider} className="text-3xl text-accent absolute right-[10px] cursor-pointer lg:hidden"/>
             </div>
-            <div className="bg-white w-[300px] h-screen flex flex-col ">
-                <Link to="/" className="text-accent font-bold text-xl hover:border-b border-b-accent">Home</Link>
-                <Link to="/products" className="text-accent font-bold text-xl hover:border-b border-b-accent">Products</Link>
-                <Link to="/about" className="text-accent font-bold text-xl hover:border-b border-b-accent">About Us</Link>
-                <Link to="/contact" className="text-accent font-bold text-xl hover:border-b border-b-accent">Contact Us</Link>
-                <Link to="/cart" className="text-accent font-bold text-xl hover:border-b border-b-accent">cart</Link>
+            <div className="bg-white w-[300px] h-[calc(100vh-100px)] flex flex-col justify-between">
+                <div className="h-[200px] flex flex-col ml-2 text-xl text-accent-dark justify-between">
+                    <div className="flex flex-row items-center">
+                        <FaHome />
+                        <Link to="/" className="text-accent font-bold  hover:border-b border-b-accent ml-3">Home</Link>
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <AiFillProduct />
+                        <Link to="/products" className="text-accent font-bold hover:border-b border-b-accent ml-3">Products</Link>
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <IoIosContacts />
+                        <Link to="/about" className="text-accent font-bold hover:border-b border-b-accent ml-3">About Us</Link>
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <IoIosContacts />
+                        <Link to="/contact" className="text-accent font-bold hover:border-b border-b-accent ml-3">Contact Us</Link>
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <FaShoppingCart />
+                        <Link to="/cart" className="text-accent font-bold hover:border-b border-b-accent ml-3">cart</Link>
+                    </div>
+                    
+                </div>
+                <div className="w-[280px] h-[100px] flex flex-col justify-between ml-1 mb-[50px]">
+                    <Link to="/login" className="text-white bg-accent p-2 rounded-xl font-bold text-xl hover:bg-accent-light flex justify-center">Login</Link>
+                    <Link to="/signup" className="text-accent font-bold text-xl border p-2 rounded-xl hover:bg-accent-light flex justify-center">Signup</Link>
+                </div>
             </div>
+            
         </div>
     )
 }
