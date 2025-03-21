@@ -7,6 +7,7 @@ import ProductPage from './home/product';
 import Cart from './home/cart';
 import ShippingPage from './home/shipping';
 import MyOrdersPage from './home/orders';
+import HomePageBody from './home/homePageBody';
 
 
 
@@ -14,10 +15,9 @@ export default function HomePage() {
   return(
     <div className = "w-full h-screen bg-gray-200">
         <Header/>
-        
         <div className='w-full h-[calc(100vh-100px)]'>
           <Routes path="/*">
-            <Route path="/" element={<h1>Home Page</h1>} />
+            <Route path="/" element={<HomePageBody/>} />
             <Route path="/products" element={<ProductPage/>} />
             <Route path="/login" element={<LoginPage/>} />
             <Route path='/cart' element={<Cart/>} />
@@ -26,8 +26,6 @@ export default function HomePage() {
             <Route path="/productInfo/:id" element={<ProductOverview/>} />
           </Routes>
         </div>
-        
-
     </div>
   );
 }
