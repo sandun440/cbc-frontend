@@ -6,17 +6,16 @@ import { FaSearch } from "react-icons/fa";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
-  const [loadingStatus, setLoadingStatus] = useState("loading"); //loaded, loading, error
+  const [loadingStatus, setLoadingStatus] = useState("loading");  //loaded, loading, error
   const [query, setQuery] = useState("");
   useEffect(() => {
     if (loadingStatus === "loading") {
-      axios
-        .get(import.meta.env.VITE_BACKEND_URL + "/api/products")
-        .then((res) => {
+      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products").then((res) => {
           setProducts(res.data);
           setLoadingStatus("loaded");
-        })
-        .catch((err) => toast.error("Error loading products"));
+        }).catch(
+          (err) => toast.error("Error loading products")
+        );
     }
   }, []);
 
