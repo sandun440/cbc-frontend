@@ -8,7 +8,7 @@ export default function Header() {
     return(
         <>
         {isSliderOpen && <NavSlider closeSlider={()=>{setIsSliderOpen(false)}}/>}
-        <header className="bg-white w-full h-[100px] relative flex items-center justify-center">
+        <header className="bg-primary w-full h-[100px] relative flex items-center justify-center">
 
             <img src="/logo.png" className="absolute h-full rounded-full cursor-pointer left-[10px]" />
             <RxHamburgerMenu onClick={()=>{setIsSliderOpen(true)}} className="text-3xl text-accent absolute right-[10px] cursor-pointer lg:hidden" />

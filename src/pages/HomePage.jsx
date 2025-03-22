@@ -13,7 +13,7 @@ import HomePageBody from './home/homePageBody';
 
 export default function HomePage() {
   return(
-    <div className = "w-full h-screen bg-gray-200">
+    <div className = "w-full h-screen bg-gray-300">
         <Header/>
         <div className='w-full h-[calc(100vh-100px)]'>
           <Routes path="/*">

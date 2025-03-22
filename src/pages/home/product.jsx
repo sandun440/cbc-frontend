@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ProductCard from "../../component/Productcard";
+import { FaSearch } from "react-icons/fa";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -44,17 +45,17 @@ export default function ProductPage() {
 
   return (
     <div className="w-full h-full pt-4 relative">
-      <div
-        className="abs
-      olute w-full flex justify-center"
-      >
-        <input
-          type="text"
-          className="w-1/2 p-2 absolute z-50"
-          placeholder="Search Products"
-          onChange={search}
-          value={query}
-        />
+      <div className="w-full flex justify-center">
+        <div className="relative w-1/2 ">
+          <input
+            type="text"
+            className="w-full p-2 pl-10 z-900 border border-accent rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+            placeholder="Search Products"
+            onChange={search}
+            value={query}
+          />
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-accent text-lg" />
+        </div>
       </div>
       {loadingStatus == "loaded" && (
         <div className="w-full h-full  overflow-y-scroll flex flex-wrap justify-center pt-4 relative">
