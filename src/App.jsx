@@ -23,9 +23,7 @@ function App() {
 
           <Route path="/login" element = {<LoginPage/>} />
           <Route path="/signup" element ={<SignupPage/>}/>
-
           <Route path = "/admin/*" element = {<AdminHomePage/>}/>
-
           <Route path="/*" element={<HomePage/>} />
         </Routes>
         </GoogleOAuthProvider>

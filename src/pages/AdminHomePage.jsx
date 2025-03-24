@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import AdminUserDetails from "./admin/adminUserDetails";
 import AdminDashboardPage from "./admin/adminDashboard";
+import EditUserForm from "./admin/edituserform";
 
 export default function AdminHomePage() {
     const [user, setUser] = useState(null);
@@ -66,6 +67,7 @@ export default function AdminHomePage() {
                     <Route path ="/products/editProduct" element={<EditProductForm/>}/>
                     <Route path="/orders" element={<AdminOrdersPage/>} />
                     <Route path="/customers" element={<AdminUserDetails/>} />
+                    <Route path="/customers/editUser" element={<EditUserForm/>}/>
                     <Route path = "/*" element = {<h1>404 not found</h1>}/>
                 </Routes>}
                 {

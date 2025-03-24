@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaPencil, FaTrash } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { FaPencil } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminUserDetails() {
   const [users, setUsers] = useState([]);
@@ -57,38 +57,14 @@ export default function AdminUserDetails() {
                         {user.isBlocked ? "Blocked" : "Normal"}
                       </td>
                       <td className="px-6 py-4 flex justify-center space-x-2">
-                        <button
-                          className="text-red-500 hover:text-red-700 p-2"
-                          title="delete"
-                          onClick={() => {
-                            const token = localStorage.getItem("token");
-                            axios
-                              .delete(
-                                `${
-                                  import.meta.env.VITE_BACKEND_URL
-                                }/api/users/${user.userId}`,
-                                {
-                                  headers: {
-                                    Authorization: "Bearer " + token,
-                                  },
-                                }
-                              )
-                              .then((res) => {
-                                toast.success("User deleted successfully");
-                                setUsersLoaded(false);
-                              });
-                          }}
-                        >
-                          <FaTrash size={16} />
-                        </button>
 
                         <button
                           className="text-blue-500 hover:text-blue-700 p-2"
                           title="edit"
                           onClick={() => {
                             // Move to editUser page
-                            navigate("/admin/users/editUser", {
-                              state: { user: user },
+                            navigate("/admin/customers/editUser", {
+                              state: { user: users.find(u => u.email === user.email)  },
                             });
                           }}
                         >
