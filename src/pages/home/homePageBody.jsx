@@ -66,6 +66,10 @@ export default function HomePageBody() {
                 }
             </div>
         </div>
+        <div className="w-full h-[200px] flex flex-col items-center justify-center mt-2">
+            <h1 className="text-5xl font-bold text-accent">Crystal Beauty Clare</h1>
+            <h2 className="text-3xl text-gray-500 mt-2">Best Cosmetic</h2>
+        </div>
         </>
     )
 }
