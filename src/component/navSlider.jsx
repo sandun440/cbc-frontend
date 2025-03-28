@@ -15,23 +15,23 @@ export default function NavSlider(props) {
                 <div className="h-[200px] flex flex-col ml-2 text-xl text-accent-dark justify-between">
                     <div className="flex flex-row items-center">
                         <FaHome />
-                        <Link to="/" className="text-accent font-bold  hover:border-b border-b-accent ml-3">Home</Link>
+                        <Link to="/" className="text-accent font-bold  hover:border-b border-b-accent ml-3" onClick={closeSlider}>Home</Link>
                     </div>
                     <div className="flex flex-row items-center">
                         <AiFillProduct />
-                        <Link to="/products" className="text-accent font-bold hover:border-b border-b-accent ml-3">Products</Link>
+                        <Link to="/products" className="text-accent font-bold hover:border-b border-b-accent ml-3" onClick={closeSlider}>Products</Link>
                     </div>
                     <div className="flex flex-row items-center">
                         <IoIosContacts />
-                        <Link to="/about" className="text-accent font-bold hover:border-b border-b-accent ml-3">About Us</Link>
+                        <Link to="/about" className="text-accent font-bold hover:border-b border-b-accent ml-3" onClick={closeSlider}>About Us</Link>
                     </div>
                     <div className="flex flex-row items-center">
                         <IoIosContacts />
-                        <Link to="/contact" className="text-accent font-bold hover:border-b border-b-accent ml-3">Contact Us</Link>
+                        <Link to="/contact" className="text-accent font-bold hover:border-b border-b-accent ml-3" onClick={closeSlider}>Contact Us</Link>
                     </div>
                     <div className="flex flex-row items-center">
                         <FaShoppingCart />
-                        <Link to="/cart" className="text-accent font-bold hover:border-b border-b-accent ml-3">cart</Link>
+                        <Link to="/cart" className="text-accent font-bold hover:border-b border-b-accent ml-3" onClick={closeSlider}>cart</Link>
                     </div>
                     
                 </div>
