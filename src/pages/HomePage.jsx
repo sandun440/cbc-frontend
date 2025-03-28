@@ -8,6 +8,7 @@ import Cart from './home/cart';
 import ShippingPage from './home/shipping';
 import MyOrdersPage from './home/orders';
 import HomePageBody from './home/homePageBody';
+import Footer from '../component/footer';
 
 
 
@@ -26,6 +27,7 @@ export default function HomePage() {
             <Route path="/productInfo/:id" element={<ProductOverview/>} />
           </Routes>
         </div>
+        <Footer/>
     </div>
   );
 }

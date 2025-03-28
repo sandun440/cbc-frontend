@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -9,7 +8,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>

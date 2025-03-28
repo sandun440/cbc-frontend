@@ -41,7 +41,7 @@ export default function HomePageBody() {
     return(
         <>
         <div className="flex flex-row justify-center mt-10 relative group">
-            <div className="w-6xl h-[500px]  rounded-2xl overflow-hidden  duration-500">
+            <div className="w-[75%] h-[600px]  rounded-2xl overflow-hidden  duration-500">
                 <img src={images[activeIndex].url} 
                 className="w-full h-full bg-cover"/>
             </div>
@@ -67,7 +67,7 @@ export default function HomePageBody() {
             </div>
         </div>
         <div className="w-full h-[200px] flex flex-col items-center justify-center mt-2">
-            <h1 className="text-5xl font-bold text-accent">Crystal Beauty Clare</h1>
+            <h1 className="text-5xl font-bold text-accent">Crystal Beauty Clear</h1>
             <h2 className="text-3xl text-gray-500 font-semibold mt-2">Best Cosmetic</h2>
         </div>
         </>
