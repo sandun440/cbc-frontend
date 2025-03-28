@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Footer(){
   return(
     <>
-    <div className="w-full h-[280px] flex flex-col bg-black/25 ">
+    <div className="w-full h-[270px] flex flex-col bg-black/25 ">
       <div className="w-full relative flex flex-row justify-around">
         <div className="w-[150px] h-[150px] flex flex-col items-center">
           <img src="/logo.png" className="cursor-pointer"/>
