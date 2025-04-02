@@ -11,7 +11,6 @@ export default function AdminReviewPage() {
     if (!reviewsLoaded) {
       axios.get(import.meta.env.VITE_BACKEND_URL +"/api/reviews")
         .then((res) => {
-          console.log(res.data);
           setReviews(res.data);
           setReviewsLoaded(true);
         });
