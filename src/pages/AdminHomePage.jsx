@@ -11,6 +11,8 @@ import AdminUserDetails from "./admin/adminUserDetails";
 import AdminDashboardPage from "./admin/adminDashboard";
 import EditUserForm from "./admin/edituserform";
 import NotFound from "./NotFound";
+import { MdStars } from "react-icons/md";
+import AdminRivewPage from "./admin/adminRivew";
 
 export default function AdminHomePage() {
     const [user, setUser] = useState(null);
@@ -44,18 +46,25 @@ export default function AdminHomePage() {
     return (
         <div className="bg-blue-200 w-full h-screen flex">
             {/* Sidebar */}
-            <div className="w-[20%] h-screen bg-blue-500 flex flex-col items-center p-4 space-y-4">
-                <Link className="flex items-center space-x-2 text-white" to="/admin/dashboard">
-                    <BsGraphUp /> <span>Dashboard</span>
+            <div className="w-[20%] h-screen bg-linear-to-r from-cyan-500 to-blue-500 flex flex-col items-center  space-y-2">
+
+                <h1 className="font-bold text-3xl text-accent bg-amber-100 w-full p-2 h-20 flex justify-center items-center">Crystal Beauty Clear</h1>
+                <h1 className="font-semibold text-3xl text-blue-100 w-full p-2 h-20 flex justify-center items-center">Admin Panel</h1>
+
+                <Link className="flex items-center w-full mt-10 py-5 hover:bg-white hover:text-blue-500 text-white justify-center space-x-5 rounded-l-full" to="/admin/dashboard">
+                    <BsGraphUp className="size-6"/> <span>Dashboard</span>
                 </Link>
-                <Link className="flex items-center space-x-2 text-white" to="/admin/products">
-                    <BsBoxSeam /> <span>Products</span>
+                <Link className="flex items-center w-full  py-5 hover:bg-white hover:text-blue-500 text-white justify-center rounded-l-full space-x-5" to="/admin/products">
+                    <BsBoxSeam className="size-6"/> <span>Products</span>
                 </Link>
-                <Link className="flex items-center space-x-2 text-white" to="/admin/orders">
-                    <BsClipboardData /> <span>Orders</span>
+                <Link className="flex items-center   w-full  py-5 hover:bg-white hover:text-blue-500 text-white justify-center rounded-l-full space-x-5" to="/admin/orders">
+                    <BsClipboardData className="size-6"/> <span>Orders</span>
                 </Link>
-                <Link className="flex items-center space-x-2 text-white" to="/admin/customers">
-                    <BsPeople /> <span>Customers</span>
+                <Link className="flex items-center  w-full  py-5 hover:bg-white hover:text-blue-500 text-white justify-center rounded-l-full space-x-5" to="/admin/customers">
+                    <BsPeople className="size-6"/> <span>Customers</span>
+                </Link>
+                <Link className="flex items-center  w-full  py-5 hover:bg-white hover:text-blue-500 text-white justify-center rounded-l-full space-x-5" to="/admin/reviews">
+                    <MdStars className="size-6"/> <span>Rivews</span>
                 </Link>
             </div>
             {/* Main Content Area */}
@@ -69,6 +78,7 @@ export default function AdminHomePage() {
                     <Route path="/orders" element={<AdminOrdersPage/>} />
                     <Route path="/customers" element={<AdminUserDetails/>} />
                     <Route path="/customers/editUser" element={<EditUserForm/>}/>
+                    <Route path="/reviews" element={<AdminRivewPage/>}/>
                     <Route path = "/*" element = {<NotFound/>}/>
                 </Routes>}
                 {
