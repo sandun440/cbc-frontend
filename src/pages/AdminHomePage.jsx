@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import AdminUserDetails from "./admin/adminUserDetails";
 import AdminDashboardPage from "./admin/adminDashboard";
 import EditUserForm from "./admin/edituserform";
+import NotFound from "./NotFound";
 
 export default function AdminHomePage() {
     const [user, setUser] = useState(null);
@@ -68,7 +69,7 @@ export default function AdminHomePage() {
                     <Route path="/orders" element={<AdminOrdersPage/>} />
                     <Route path="/customers" element={<AdminUserDetails/>} />
                     <Route path="/customers/editUser" element={<EditUserForm/>}/>
-                    <Route path = "/*" element = {<h1>404 not found</h1>}/>
+                    <Route path = "/*" element = {<NotFound/>}/>
                 </Routes>}
                 {
                     user==null&&<div className="w-full h-full flex justify-center items-center">
