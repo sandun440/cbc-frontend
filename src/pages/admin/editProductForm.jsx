@@ -24,10 +24,6 @@ export default function EditProductForm() {
     const [stock, setStock] = useState(product.stock);
     const [description, setDescription] = useState(product.description);
 
-    
-
-
-
     async function handleSubmit(){
         const altnames = alternativeNames.split(",");
 

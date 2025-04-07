@@ -13,6 +13,7 @@ import EditUserForm from "./admin/edituserform";
 import NotFound from "./NotFound";
 import { MdStars } from "react-icons/md";
 import AdminRivewPage from "./admin/adminRivew";
+import EditReview from "./admin/editreviewform";
 
 export default function AdminHomePage() {
     const [user, setUser] = useState(null);
@@ -79,13 +80,13 @@ export default function AdminHomePage() {
                     <Route path="/customers" element={<AdminUserDetails/>} />
                     <Route path="/customers/editUser" element={<EditUserForm/>}/>
                     <Route path="/reviews" element={<AdminRivewPage/>}/>
+                    <Route path = "/reviews/editReview" element={<EditReview/>}/>
                     <Route path = "/*" element = {<NotFound/>}/>
                 </Routes>}
                 {
                     user==null&&<div className="w-full h-full flex justify-center items-center">
                         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-t-2 border-accent"></div>
                     </div>
-
                 }
             </div>
         </div>

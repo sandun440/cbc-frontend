@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaPencil } from "react-icons/fa6";
+import toast from "react-hot-toast";
+import { FaPencil, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminReviewPage() {
@@ -12,6 +13,7 @@ export default function AdminReviewPage() {
       axios.get(import.meta.env.VITE_BACKEND_URL +"/api/reviews")
         .then((res) => {
           setReviews(res.data);
+          console.log(res.data);
           setReviewsLoaded(true);
         });
     }
@@ -33,8 +35,10 @@ export default function AdminReviewPage() {
                   <tr className="bg-gray-200 text-gray-700 text-left">
                     <th className="px-6 py-3">Review Id</th>
                     <th className="px-6 py-3">Reviewer Email</th>
+                    <th className="px-6 py-3">Product Id</th>
                     <th className="px-6 py-3">Review</th>
                     <th className="px-6 py-3">Rating</th>
+                    <th className="px-6 py-3">status</th>
                     <th className="px-6 py-3 text-center">Action</th>
                   </tr>
                 </thead>
@@ -42,12 +46,28 @@ export default function AdminReviewPage() {
                   {reviews.map((review, index) => (
                     <tr key={index} className="border-b hover:bg-gray-100">
                       <td className="px-6 py-4 font-bold">{review.reviewId}</td>
-                      <td className="px-6 py-4 font-semibold">
-                        {review.email}
-                      </td>
+                      <td className="px-6 py-4 font-semibold">{review.email}</td>
+                      <td className="px-6 py-4">{review.productId}</td>
                       <td className="px-6 py-4">{review.description}</td>
                       <td className="px-6 py-4"><span className="font-semibold text-accent">{review.rating}</span> / 5</td>
+                      <td className="px-6 py-4">{review.isVisible? "Visible" : "Hide"}</td>
                       <td className="px-6 py-4 flex justify-center space-x-2">
+                        <button className="text-red-500 hover:text-red-700 p-2" 
+                        title="delete"
+                        onClick={() => {
+                          const token = localStorage.getItem("token");
+                          axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/${review.reviewId}`, {
+                            headers: {
+                              Authorization: "Bearer " + token
+                            }
+                          }).then(res => {
+                            toast.success("Review deleted sucssesfully.")
+                            setReviewsLoaded(false);
+                          })
+                        }}
+                        >
+                          <FaTrash size={16} />
+                        </button>
                         <button
                           className="text-blue-500 hover:text-blue-700 p-2"
                           title="Edit"
