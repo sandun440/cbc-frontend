@@ -5,9 +5,11 @@ import ProductCard from "../../component/Productcard";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaAnglesRight } from "react-icons/fa6";
+import ReviewCard from "../../component/reviewcard";
 
 export default function HomePageBody() {
     const [products, setProducts] = useState([]);
+    const [Reviews, setReviews] = useState([]);
     const navigate = useNavigate();
     const images = [
         {
@@ -34,6 +36,13 @@ export default function HomePageBody() {
             setProducts(res.data);
         }).catch(
             (err) => toast.error("Error loading products")
+        );
+
+        axios.get(import.meta.env.VITE_BACKEND_URL + "/api/reviews").then((res) => {
+            setReviews(res.data);
+            // console.log(res.data);
+        }).catch(
+            (err) => toast.error("Error loading reviews")
         );
 
         const interval = setInterval(
@@ -96,8 +105,24 @@ export default function HomePageBody() {
                 ))}
             </div>
             <div className="flex flex-row text-white  w-[250px] h-auto justify-center items-center bg-accent rounded-lg">
-                <button className="bg-accent p-4 text-3xl" onClick={viewMore}> View More</button>
-                <FaAnglesRight size={30}/>
+                <button className="bg-accent p-2 text-3xl" onClick={viewMore}> View More</button>
+                <FaAnglesRight size={28}/>
+            </div>
+
+
+            <div className="w-full h-auto flex flex-col items-center justify-center mt-10">
+                <h1 className="text-3xl font-bold text-gray-800 text-center mt-2">Reviews</h1>
+                <h2 className="text-2xl text-gray-500 font-semibold mt-2">What our customers say</h2>
+                <div className="w-full h-auto flex flex-col gap-2 justify-center items-center mt-5">
+                    {Reviews.slice(0,3).map((review) => (
+                        <ReviewCard key={review.productId} review={review} />
+                    ))}
+            </div>
+                
+            <div className="flex flex-row text-white  w-[250px] h-auto justify-center items-center bg-accent-dark rounded-lg mt-10">
+                <button className="p-2 text-3xl" onClick={viewMore}> View More</button>
+                <FaAnglesRight size={28}/>
+            </div>
             </div>
         </div>
         </>
