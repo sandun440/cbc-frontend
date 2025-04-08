@@ -47,7 +47,7 @@ import { Link, useNavigate } from 'react-router-dom';
       toast.success("Login successful");
       localStorage.setItem("token", res.data.token);
       if (res.data.user.type === "admin") {
-        navigate("/admin");
+        navigate("/admin/dashboard");
       } else {
         navigate("/");
       }

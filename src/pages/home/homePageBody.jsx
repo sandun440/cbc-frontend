@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { RxDotFilled } from "react-icons/rx";
+import ProductCard from "../../component/Productcard";
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FaAnglesRight } from "react-icons/fa6";
 
 export default function HomePageBody() {
+    const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
     const images = [
         {
             url : "https://i.pinimg.com/1200x/65/6e/f2/656ef2cb9e82a5c102e723bf997a4cb2.jpg"
@@ -23,6 +29,13 @@ export default function HomePageBody() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {
+
+        axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products").then((res) => {
+            setProducts(res.data);
+        }).catch(
+            (err) => toast.error("Error loading products")
+        );
+
         const interval = setInterval(
             () => {
                 nextImage();
@@ -37,6 +50,10 @@ export default function HomePageBody() {
     const prevImage = () => {
         setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
+
+    function viewMore(){
+        navigate("/products");
+    }
     
     return(
         <>
@@ -69,6 +86,19 @@ export default function HomePageBody() {
         <div className="w-full h-[200px] flex flex-col items-center justify-center mt-2">
             <h1 className="text-5xl font-bold text-accent">Crystal Beauty Clear</h1>
             <h2 className="text-3xl text-gray-500 font-semibold mt-2">Best Cosmetic</h2>
+        </div>
+        {/* some product and view more button */}
+        <div className="w-full h-auto flex flex-col items-center justify-center ">
+            <h1 className="text-3xl font-bold text-gray-800 text-center mt-10">Our Products</h1>
+            <div className="w-full h-auto flex flex-wrap justify-center items-center mt-5">
+                {products.slice(0,3).map((product) => (
+                            <ProductCard key={product.productId} product={product} />
+                ))}
+            </div>
+            <div className="flex flex-row text-white  w-[250px] h-auto justify-center items-center bg-accent rounded-lg">
+                <button className="bg-accent p-4 text-3xl" onClick={viewMore}> View More</button>
+                <FaAnglesRight size={30}/>
+            </div>
         </div>
         </>
     )

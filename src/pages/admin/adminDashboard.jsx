@@ -1,43 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Users,
   BarChart3,
   ShoppingCart,
-  Bell,
-  Search,
   Mail,
-  
 } from "lucide-react";
 
 const AdminDashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Sample data for stats cards
   const stats = [
-    { title: "Total Users", value: "2,845", icon: <Users />, trend: "+12.5%" },
-    { title: "Revenue", value: "$45,231", icon: <BarChart3 />, trend: "+5.2%" },
+    { title: "Total Users", value: "2,845", icon: <Users />, trend : "+12.5%" },
+    { title: "Revenue", value: "LKR. 45,231", icon: <BarChart3 />, trend: "+5.2%" },
     { title: "Orders", value: "384", icon: <ShoppingCart />, trend: "+8.1%" },
     { title: "Tickets", value: "23", icon: <Mail />, trend: "-2.3%" },
-  ];
-
-  // Sample data for recent activities
-  const activities = [
-    { user: "John Doe", action: "created a new account", time: "5 min ago" },
-    {
-      user: "Sarah Smith",
-      action: "placed an order #38291",
-      time: "15 min ago",
-    },
-    {
-      user: "Alex Johnson",
-      action: "submitted a support ticket",
-      time: "1 hour ago",
-    },
-    {
-      user: "Emma Wilson",
-      action: "updated profile information",
-      time: "2 hours ago",
-    },
   ];
 
   return (
