@@ -11,7 +11,7 @@ export default function Footer(){
         <div className="w-[150px] h-[150px] flex flex-col items-center">
           <img src="/logo.png" className="cursor-pointer"/>
             <p className="font-bold">Crystal beauty clear</p>
-            <p className="font-semibold">about</p>
+            <p className="font-semibold w-[250px] text-center">Beauty. Elegance. Confidence.</p>
         </div>
         <div className="w-[200px]  flex flex-col items-center">
           <h1 className="font-bold text-3xl mt-3">Quick Links</h1>

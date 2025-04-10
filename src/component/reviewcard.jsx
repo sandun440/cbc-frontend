@@ -1,5 +1,4 @@
 export default function ReviewCard(props) {
-  console.log(props);
   const pp = props.review;
     return (
       <div className="w-[800px] h-[250px] bg-yellow-400 rounded-xl shadow-lg shadow-gray-500 hover:shadow-primary  hover:border-[3px] overflow-hidden flex flex-col justify-around p-4 m-4">
