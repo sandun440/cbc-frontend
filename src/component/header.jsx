@@ -27,7 +27,6 @@ export default function Header() {
             if (response.ok) {
                 const userData = await response.json();
                 setUser(userData);
-                console.log(userData);
                 setIsLoggedIn(true);
             } else {
                 setIsLoggedIn(false);

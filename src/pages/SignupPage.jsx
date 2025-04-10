@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const [profilePicture, setProfilePicture] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ export default function SignUpPage() {
 
   function signUp(){
     axios.post(import.meta.env.VITE_BACKEND_URL + "/api/users/signup", {
+      profilePicture: profilePicture,
       email: email,
       firstName : fname,
       lastName : lname,
@@ -70,6 +72,22 @@ export default function SignUpPage() {
         </h1>
 
         <form onSubmit={handleFormSubmit}>
+          <div className="mb-4">
+            <label 
+            htmlFor="photo" 
+            className="block text-sm font-medium text-gray-700 mb-1"
+            > 
+            Profile Picture 
+            </label>
+            <input
+              type="file"
+              id="photo"
+              accept="image/*"
+              value={profilePicture}
+              onChange={(e) => setProfilePicture(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+            />
+          </div>
           <div className="mb-4">
             <label
               htmlFor="fname"

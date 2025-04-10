@@ -10,6 +10,7 @@ import MyOrdersPage from './home/orders';
 import HomePageBody from './home/homePageBody';
 import Footer from '../component/footer';
 import FixedCartIcon from '../component/fixedCartIcon';
+import ProfileInfoChange from './home/profileInfoChange';
 
 
 
@@ -26,6 +27,7 @@ export default function HomePage() {
             <Route path='/shipping' element={<ShippingPage/>} />
             <Route path='/orders' element={<MyOrdersPage/>}/>
             <Route path="/productInfo/:id" element={<ProductOverview/>} />
+            <Route path="/profile" element={<ProfileInfoChange/>} />
           </Routes>
         </div>
         <FixedCartIcon/>

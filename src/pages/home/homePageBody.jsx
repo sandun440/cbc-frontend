@@ -63,11 +63,14 @@ export default function HomePageBody() {
     function viewMore(){
         navigate("/products");
     }
+    function viewMoreReviews(){
+        navigate("/reviews");
+    }
     
     return(
         <>
-        <div className="flex flex-row justify-center mt-10 relative group">
-            <div className="w-[75%] h-[600px]  rounded-2xl overflow-hidden  duration-500">
+        <div className="flex flex-row justify-center mt-5 relative group">
+            <div className="w-[98%] h-[750px]  rounded-2xl overflow-hidden  duration-500">
                 <img src={images[activeIndex].url} 
                 className="w-full h-full bg-cover"/>
             </div>
@@ -120,7 +123,7 @@ export default function HomePageBody() {
             </div>
                 
             <div className="flex flex-row text-white  w-[250px] h-auto justify-center items-center bg-accent-dark rounded-lg mt-10">
-                <button className="p-2 text-3xl" onClick={viewMore}> View More</button>
+                <button className="p-2 text-3xl" onClick={viewMoreReviews}> View More</button>
                 <FaAnglesRight size={28}/>
             </div>
             </div>
