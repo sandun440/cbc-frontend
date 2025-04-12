@@ -146,6 +146,7 @@ export default function ShippingPage() {
                 key={item.productId}
                 productId={item.productId}
                 qty={item.qty}
+                readOnly={true} // Disable editing in shipping page
               />
             ))}
           </tbody>
