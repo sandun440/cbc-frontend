@@ -36,31 +36,33 @@ export default function Cart() {
 
   return (
     <div className="w-full h-full overflow-y-scroll flex flex-col items-end">
-      <table className="w-full">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Product ID</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            cart.map(item => (
-              <CartCard
-                key={item.productId}
-                productId={item.productId}
-                qty={item.qty}
-                refresh={() => setRefresh(!refresh)} // ✅ Pass trigger to child
-              />
-            ))
-          }
-        </tbody>
-      </table>
+      <div className="w-full overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Product ID</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              cart.map(item => (
+                <CartCard
+                  key={item.productId}
+                  productId={item.productId}
+                  qty={item.qty}
+                  refresh={() => setRefresh(!refresh)} // ✅ Pass trigger to child
+                />
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
       <div className="w-[400px] flex flex-col items-center mt-6">
         <h1 className="text-3xl font-bold text-accent">Total: LKR. {labeledTotal.toFixed(2)}</h1>
         <h1 className="text-3xl font-bold text-accent">Discount: LKR. {total.toFixed(2)}</h1>

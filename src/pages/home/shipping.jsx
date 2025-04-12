@@ -129,28 +129,23 @@ export default function ShippingPage() {
         </div>
 
         <h2 className="text-xl font-bold mt-6 mb-4">Order Summary</h2>
-        <table className="w-full border-collapse border border-gray-300 mb-4">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 p-2">Image</th>
-              <th className="border border-gray-300 p-2">Product Name</th>
-              <th className="border border-gray-300 p-2">Product ID</th>
-              <th className="border border-gray-300 p-2">Qty</th>
-              <th className="border border-gray-300 p-2">Price</th>
-              <th className="border border-gray-300 p-2">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.map((item) => (
-              <CartCard
-                key={item.productId}
-                productId={item.productId}
-                qty={item.qty}
-                readOnly={true} // Disable editing in shipping page
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="w-full overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map(item => (
+                <CartCard key={item.productId} productId={item.productId} qty={item.qty} />
+              ))}
+            </tbody>
+          </table>
+        </div>
         <h1 className="text-lg font-bold text-gray-700 mb-2">
           Total: LKR. {labeledTotal.toFixed(2)}
         </h1>

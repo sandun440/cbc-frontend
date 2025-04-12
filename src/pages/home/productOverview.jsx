@@ -94,73 +94,17 @@ export default function ProductOverview() {
       {status === "found" && (
         <>
           {/* Product Details Section */}
-          <div className="w-full flex flex-col lg:flex-row justify-center items-center">
-            <h1 className="text-3xl font-bold text-gray-800 lg:hidden">
-              {product.productName}
-            </h1>
-            <p className="text-xl text-gray-600 lg:hidden">
-              {product.price > product.lastPrice && (
-                <span className="line-through text-red-500">
-                  LKR.{product.price}
-                </span>
-              )}
-              <span>{" LKR." + product.lastPrice}</span>
-            </p>
-
-            <div className="w-full h-full lg:w-[35%]">
+          <div className="w-full flex flex-col lg:flex-row justify-center items-center px-4">
+            <div className="w-full lg:w-1/3">
               <ImageSlider images={product.images} />
             </div>
-
-            <div className="w-full lg:w-[65%] h-full p-4">
-              <h1 className="text-3xl font-bold text-gray-800 hidden lg:block">
-                {product.productName}
-              </h1>
-              <h2 className="text-2xl font-bold text-gray-500">
-                {product.altNames.join(" | ")}
-              </h2>
-              <p className="text-xl text-gray-600 hidden lg:block">
-                {product.price > product.lastPrice && (
-                  <span className="line-through text-red-500">
-                    LKR.{product.price}
-                  </span>
-                )}
-                <span>{" LKR." + product.lastPrice}</span>
-              </p>
-              <p className="text-lg text-gray-600 line-clamp-3 mb-4">
-                {product.description}
-              </p>
-
-              {/* Quantity Selector */}
-              <div className="flex items-center mb-4">
-                <button
-                  onClick={decreaseQty}
-                  className="px-3 py-1 text-lg border rounded-l bg-gray-200"
-                >
-                  -
-                </button>
-                <span className="px-4 py-1 border-t border-b text-lg">
-                  {quantity}
-                </span>
-                <button
-                  onClick={increaseQty}
-                  className="px-3 py-1 text-lg border rounded-r bg-gray-200"
-                >
-                  +
-                </button>
+            <div className="w-full lg:w-2/3 p-4">
+              <h1 className="text-2xl sm:text-3xl font-bold">{product.productName}</h1>
+              <p className="text-lg sm:text-xl">{product.description}</p>
+              <div className="flex flex-col sm:flex-row items-center">
+                <button className="bg-accent text-white p-2 rounded-lg w-full sm:w-auto" onClick={onAddtoCartClick}>Add to Cart</button>
+                <button className="text-accent border p-2 rounded-lg w-full sm:w-auto" onClick={onBuyNowClick}>Buy Now</button>
               </div>
-
-              <button
-                className="bg-accent text-white p-2 rounded-lg"
-                onClick={onAddtoCartClick}
-              >
-                Add to Cart
-              </button>
-              <button
-                className="text-accent border mx-1 border-accent p-2 rounded-lg"
-                onClick={onBuyNowClick}
-              >
-                Buy Now
-              </button>
             </div>
           </div>
 

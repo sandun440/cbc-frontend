@@ -62,62 +62,37 @@ import { Link, useNavigate } from 'react-router-dom';
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-primary">
-      <div className="w-full max-w-md p-8 backdrop-blur-3xl bg-white  rounded-xl shadow-md">
-        <div className="flex justify-center mb-6">
-          <div className="w-[150px] h-[150px] bg-amber-50 rounded-full flex items-center justify-center">
-            <img 
-              src="/logo.png" 
-              alt="Center Beauty Club" 
-              className="w-full h-full rounded-full object-cover"
-            />
-          </div>
-        </div>
-        
-        
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold mb-4">Login</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-500"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-500"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          
-          <div>
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-900 bg-accent hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-            >
-              Login
-            </button>
-          </div>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            className="w-full p-2 border rounded mb-4"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            className="w-full p-2 border rounded mb-4"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="w-full bg-accent text-white p-2 rounded"
+          >
+            Login
+          </button>
         </form>
-        
         <div className="mt-6">
           <button
             type="button"
