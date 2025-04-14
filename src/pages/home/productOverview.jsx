@@ -25,6 +25,8 @@ export default function ProductOverview() {
   const [status, setStatus] = useState("loading");
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+  const [newReview, setNewReview] = useState({ rating: 0, description: "" }); // New review
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fetch product and reviews when component mounts
   useEffect(() => {
@@ -81,6 +83,45 @@ export default function ProductOverview() {
     });
   }
 
+  // Function to handle review submission
+  const handleReviewSubmit = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("You must be logged in to submit a review.");
+      return;
+    }
+
+    if (!newReview.rating || !newReview.description.trim()) {
+      toast.error("Please provide a rating and description.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/reviews",
+        {
+          productId: product.productId,
+          rating: newReview.rating,
+          description: newReview.description,
+          email: localStorage.getItem("email"), // Assuming email is stored in local storage
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Review submitted successfully!");
+      console.log(response.data);
+      setReviews((prev) => [...prev, response.data]); // Add new review to the list
+      setNewReview({ rating: 0, description: "" }); // Reset form
+    } catch (error) {
+      toast.error("Failed to submit review. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full min-h-[calc(100vh-100px)]">
       {status === "loading" && (
@@ -103,7 +144,7 @@ export default function ProductOverview() {
               <p className="text-lg sm:text-xl">{product.description}</p>
               <div className="flex flex-col sm:flex-row items-center">
                 <button className="bg-accent text-white p-2 rounded-lg w-full sm:w-auto" onClick={onAddtoCartClick}>Add to Cart</button>
-                <button className="text-accent border p-2 rounded-lg w-full sm:w-auto" onClick={onBuyNowClick}>Buy Now</button>
+                <button className="text-accent border p-2 rounded-lg w-full  ml-3 sm:w-auto" onClick={onBuyNowClick}>Buy Now</button>
               </div>
             </div>
           </div>
@@ -134,6 +175,45 @@ export default function ProductOverview() {
               ) : (
                 <p className="text-gray-500">No reviews yet.</p>
               )}
+
+              {/* Add Review Form */}
+              <div className="mt-6 bg-accent-light rounded-2xl p-5 mb-3">
+                <h3 className="text-xl font-bold mb-2">Add Your Review</h3>
+                <div className="flex items-center mb-4">
+                  <label className="mr-2 font-semibold">Rating:</label>
+                  <div className="flex space-x-1 text-yellow-500">
+                    {
+                    Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={`cursor-pointer ${
+                          i < newReview.rating ? "text-yellow-500" : "text-gray-300"
+                        }`}
+                        onClick={() => setNewReview((prev) => ({ ...prev, rating: i + 1 }))}
+                      >
+                        ★
+                      </span>
+                    ))
+                    }
+                  </div>
+                </div>
+                <textarea
+                  className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+                  rows="4"
+                  placeholder="Write your review here..."
+                  value={newReview.description}
+                  onChange={(e) =>
+                    setNewReview((prev) => ({ ...prev, description: e.target.value }))
+                  }
+                ></textarea>
+                <button
+                  className="bg-accent text-white py-2 px-4 rounded-lg hover:bg-accent-light"
+                  onClick={handleReviewSubmit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Review"}
+                </button>
+              </div>
             </div>
           </div>
         </>
