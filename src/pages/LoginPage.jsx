@@ -46,6 +46,12 @@ import { Link, useNavigate } from 'react-router-dom';
       }
       toast.success("Login successful");
       localStorage.setItem("token", res.data.token);
+
+      if(res.data.user.isBlocked){
+        toast.error("Your account is blocked. Please contact support.");
+        return;
+      }
+      
       if (res.data.user.type === "admin") {
         navigate("/admin/dashboard");
       } else {

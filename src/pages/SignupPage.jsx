@@ -3,10 +3,11 @@ import React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import uploadMediaToSupabase from "../utils/mediaUpload";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
-  const [profilePicture, setProfilePicture] = useState("");
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -26,10 +27,23 @@ export default function SignUpPage() {
     setPasswordsMatch(password === newConfirmPassword);
   }
 
-  function signUp() {
+  async function signUp() {
+    let profilePictureUrl = "";
+  
+    if (profilePictureFile) {
+      try {
+        profilePictureUrl = await uploadMediaToSupabase(profilePictureFile);
+
+      } catch (error) {
+        console.log("Profile picture upload failed:", error);
+        toast.error("Failed to upload profile picture.");
+        return;
+      }
+    }
+  
     axios
       .post(import.meta.env.VITE_BACKEND_URL + "/api/users/signup", {
-        profilePicture: profilePicture,
+        profilePicture: profilePictureUrl,
         email: email,
         firstName: fname,
         lastName: lname,
@@ -37,7 +51,7 @@ export default function SignUpPage() {
       })
       .then((res) => {
         toast.success("User created successfully.");
-        if (res.data.message == "User created") {
+        if (res.data.message === "User created") {
           navigate("/");
         }
       })
@@ -46,6 +60,7 @@ export default function SignUpPage() {
         toast.error("User creation failed.");
       });
   }
+  
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -77,13 +92,12 @@ export default function SignUpPage() {
               type="file"
               id="photo"
               accept="image/*"
-              value={profilePicture}
-              onChange={(e) => setProfilePicture(e.target.value)}
+              onChange={(e) => setProfilePictureFile(e.target.files[0])}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
 
-          <div>
+          <div> 
             <label htmlFor="fname" className="block text-sm font-medium text-gray-700 mb-1">
               First Name
             </label>

@@ -105,16 +105,19 @@ export default function Header() {
                             </Link>
                         </>
                     ) : (
-                        <div className="flex items-center space-x-4 cursor-pointer">
-                            <img
-                                src={user?.profilePicture || "/default-profile.png"}
-                                alt="Profile"
-                                className="w-10 h-10 rounded-full"
-                                onClick={() => navigate("/profile")}
-                            />
-                            <span className="text-accent font-bold text-xl">
-                                {user?.firstName || "User"}
-                            </span>
+                        <div className="flex items-center space-x-4 cursor-pointer" >
+                            <div onClick={() => navigate("/profile")} className="flex items-center space-x-2 cursor-pointer">
+                                <img
+                                    src={user?.profilePicture || "/default-profile.jpg"}
+                                    alt="Profile"
+                                    className="w-10 h-10 rounded-full"
+                                    
+                                />
+                                <span className="text-accent font-bold text-xl">
+                                    {user?.firstName || "User"}
+                                </span>
+                            </div>
+                            
                             <button
                                 onClick={handleLogout}
                                 className="text-white bg-red-500 p-2 rounded-xl font-bold text-sm hover:bg-red-600"
