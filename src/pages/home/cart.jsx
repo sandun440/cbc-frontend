@@ -67,7 +67,7 @@ export default function Cart() {
         <h1 className="text-3xl font-bold text-accent">Total: LKR. {labeledTotal.toFixed(2)}</h1>
         <h1 className="text-3xl font-bold text-accent">Discount: LKR. {total.toFixed(2)}</h1>
         <h1 className="text-3xl font-bold text-accent">Grand Total: LKR. {(labeledTotal - total).toFixed(2)}</h1>
-        <button onClick={onOrderCheckoutClick} className="bg-accent hover:bg-accent-light hover:text-black text-white p-2 rounded-lg w-[300px]">Checkout</button>
+        <button onClick={onOrderCheckoutClick} className="bg-accent hover:bg-accent-light hover:text-black text-white p-2 rounded-lg w-[300px] mb-4">Checkout</button>
       </div>
     </div>
   );
