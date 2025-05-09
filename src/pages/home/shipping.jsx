@@ -146,13 +146,13 @@ export default function ShippingPage() {
             </tbody>
           </table>
         </div>
-        <h1 className="text-lg font-bold text-gray-700 mb-2">
+        <h1 className="text-lg font-semibold text-gray-700 mb-2">
           Total: LKR. {labeledTotal.toFixed(2)}
         </h1>
-        <h1 className="text-lg font-bold text-gray-700 mb-2">
+        <h1 className="text-lg font-semibold text-gray-700 mb-2">
           Discount: LKR. {(labeledTotal - total).toFixed(2)}
         </h1>
-        <h1 className="text-lg font-bold text-gray-700 mb-4">
+        <h1 className="text-lg font-extrabold text-gray-700 mb-4">
           Grand Total: LKR. {total.toFixed(2)}
         </h1>
         <button
