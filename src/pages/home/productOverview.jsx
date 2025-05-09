@@ -21,16 +21,14 @@ export default function ProductOverview() {
   const params = useParams();
   const productId = params.id;
   const [product, setProduct] = useState(null);
-  const [reviews, setReviews] = useState([]); // State to store reviews
+  const [reviews, setReviews] = useState([]);
   const [status, setStatus] = useState("loading");
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
-  const [newReview, setNewReview] = useState({ rating: 0, description: "" }); // New review
+  const [newReview, setNewReview] = useState({ rating: 0, description: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch product and reviews when component mounts
   useEffect(() => {
-    // Fetch product details
     axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId)
       .then((res) => {
         if (res.data == null) {
@@ -39,15 +37,13 @@ export default function ProductOverview() {
           setProduct(res.data);
           setStatus("found");
 
-          // Fetch reviews for the product
           axios.get(import.meta.env.VITE_BACKEND_URL + "/api/reviews/" + productId)
             .then((reviewsRes) => {
-              setReviews(reviewsRes.data); // Set reviews to state
-              console.log(reviewsRes.data);
+              setReviews(reviewsRes.data);
             })
             .catch((err) => {
               console.error("Error fetching reviews:", err);
-              setReviews([]); // Set reviews as empty if there's an error
+              setReviews([]);
             });
         }
       })
@@ -83,7 +79,6 @@ export default function ProductOverview() {
     });
   }
 
-  // Function to handle review submission
   const handleReviewSubmit = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -98,12 +93,13 @@ export default function ProductOverview() {
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/reviews",
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/reviews",
         {
           productId: product.productId,
           rating: newReview.rating,
           description: newReview.description,
-          email: localStorage.getItem("email"), // Assuming email is stored in local storage
+          email: localStorage.getItem("email"),
         },
         {
           headers: {
@@ -112,9 +108,8 @@ export default function ProductOverview() {
         }
       );
       toast.success("Review submitted successfully!");
-      console.log(response.data);
-      setReviews((prev) => [...prev, response.data]); // Add new review to the list
-      setNewReview({ rating: 0, description: "" }); // Reset form
+      setReviews((prev) => [...prev, response.data]);
+      setNewReview({ rating: 0, description: "" });
     } catch (error) {
       toast.error("Failed to submit review. Please try again.");
     } finally {
@@ -134,7 +129,7 @@ export default function ProductOverview() {
 
       {status === "found" && (
         <>
-          {/* Product Details Section */}
+          {/* Product Details */}
           <div className="w-full flex flex-col lg:flex-row justify-center items-center px-4">
             <div className="w-full lg:w-1/3">
               <ImageSlider images={product.images} />
@@ -142,14 +137,46 @@ export default function ProductOverview() {
             <div className="w-full lg:w-2/3 p-4">
               <h1 className="text-2xl sm:text-3xl font-bold">{product.productName}</h1>
               <p className="text-lg sm:text-xl">{product.description}</p>
-              <div className="flex flex-col sm:flex-row items-center">
-                <button className="bg-accent text-white p-2 rounded-lg w-full sm:w-auto" onClick={onAddtoCartClick}>Add to Cart</button>
-                <button className="text-accent border p-2 rounded-lg w-full  ml-3 sm:w-auto" onClick={onBuyNowClick}>Buy Now</button>
+
+              {/* Quantity and Buttons (Stacked) */}
+              <div className="flex flex-col items-start space-y-4 mt-4">
+                {/* Quantity Controls */}
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={decreaseQty}
+                    className="bg-gray-200 px-3 py-1 rounded text-lg font-bold"
+                  >
+                    −
+                  </button>
+                  <span className="text-lg font-semibold">{quantity}</span>
+                  <button
+                    onClick={increaseQty}
+                    className="bg-gray-200 px-3 py-1 rounded text-lg font-bold"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Buttons under quantity */}
+                <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 w-full sm:w-auto">
+                  <button
+                    className="bg-accent text-white p-2 rounded-lg w-full sm:w-auto"
+                    onClick={onAddtoCartClick}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="text-accent border p-2 rounded-lg w-full sm:w-auto"
+                    onClick={onBuyNowClick}
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Centered Customer Reviews Section */}
+          {/* Customer Reviews Section */}
           <div className="w-full flex justify-center mt-10 px-4">
             <div className="w-full max-w-3xl">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -176,25 +203,25 @@ export default function ProductOverview() {
                 <p className="text-gray-500">No reviews yet.</p>
               )}
 
-              {/* Add Review Form */}
+              {/* Add Review */}
               <div className="mt-6 bg-accent-light rounded-2xl p-5 mb-3">
                 <h3 className="text-xl font-bold mb-2">Add Your Review</h3>
                 <div className="flex items-center mb-4">
                   <label className="mr-2 font-semibold">Rating:</label>
                   <div className="flex space-x-1 text-yellow-500">
-                    {
-                    Array.from({ length: 5 }).map((_, i) => (
+                    {Array.from({ length: 5 }).map((_, i) => (
                       <span
                         key={i}
                         className={`cursor-pointer ${
                           i < newReview.rating ? "text-yellow-500" : "text-gray-300"
                         }`}
-                        onClick={() => setNewReview((prev) => ({ ...prev, rating: i + 1 }))}
+                        onClick={() =>
+                          setNewReview((prev) => ({ ...prev, rating: i + 1 }))
+                        }
                       >
                         ★
                       </span>
-                    ))
-                    }
+                    ))}
                   </div>
                 </div>
                 <textarea
@@ -203,7 +230,10 @@ export default function ProductOverview() {
                   placeholder="Write your review here..."
                   value={newReview.description}
                   onChange={(e) =>
-                    setNewReview((prev) => ({ ...prev, description: e.target.value }))
+                    setNewReview((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
                   }
                 ></textarea>
                 <button
