@@ -1,9 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #f3f3f3;
+    --color-primary: #f8f5f0;
     --color-secondary: #5e5d5d;
     --color-accent: #cd7225;
-    --color-accent-light: #cd722580;
+    --color-accent-light: #cd722550;
     --color-accent-dark: #9a551b;
+    --color-cream: #fdf6ee;
+    --color-dark: #1a1008;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-primary);
+    color: #2d1f0e;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f8f5f0;
+}
+::-webkit-scrollbar-thumb {
+    background: #cd7225;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #9a551b;
+}
+
+/* Smooth transitions globally */
+a, button {
+    transition: all 0.25s ease;
+}
+
+/* Glass effect utility */
+.glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(205, 114, 37, 0.15);
+}
+
+/* Premium card shadow */
+.card-shadow {
+    box-shadow: 0 4px 24px rgba(205, 114, 37, 0.1), 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.card-shadow:hover {
+    box-shadow: 0 8px 40px rgba(205, 114, 37, 0.22), 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Playfair heading font */
+.font-playfair {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Gradient text */
+.text-gradient {
+    background: linear-gradient(135deg, #cd7225, #9a551b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Accent gradient bg */
+.bg-accent-gradient {
+    background: linear-gradient(135deg, #cd7225 0%, #9a551b 100%);
+}
+
+/* Input focus ring */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(205, 114, 37, 0.2);
+    border-color: #cd7225 !important;
+}
+
+/* Animate fade in */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Shimmer loading */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
 }

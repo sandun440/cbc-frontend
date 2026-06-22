@@ -7,14 +7,20 @@ export default function Header() {
     const [isSliderOpen, setIsSliderOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
+    const [scrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            // Fetch user data from the backend
             fetchUserData(token);
         }
+
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 10);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const fetchUserData = async (token) => {
@@ -49,78 +55,85 @@ export default function Header() {
     return (
         <>
             {isSliderOpen && <NavSlider closeSlider={() => setIsSliderOpen(false)} />}
-            <header className="bg-primary w-full h-[100px] relative flex items-center justify-center">
-                <img
-                    src="/logo.png"
-                    className="absolute h-full rounded-full cursor-pointer left-[10px]"
-                />
+            <header
+                className={`w-full h-[80px] sticky top-0 z-50 flex items-center justify-between px-6 transition-all duration-300 ${
+                    scrolled
+                        ? "bg-white/95 backdrop-blur-md shadow-md border-b border-accent/10"
+                        : "bg-white shadow-sm border-b border-accent/10"
+                }`}
+            >
+                {/* Logo */}
+                <Link to="/" className="flex items-center gap-3 group">
+                    <img
+                        src="/logo.png"
+                        className="h-[60px] w-[60px] rounded-full object-cover ring-2 ring-accent/20 group-hover:ring-accent/60 transition-all duration-300"
+                    />
+                    <div className="hidden sm:block">
+                        <span className="font-playfair text-lg font-bold text-accent leading-tight block">Crystal Beauty</span>
+                        <span className="text-xs text-secondary tracking-widest uppercase">Clear</span>
+                    </div>
+                </Link>
+
+                {/* Hamburger - mobile */}
                 <RxHamburgerMenu
-                    onClick={() => {
-                        setIsSliderOpen(true);
-                    }}
-                    className="text-3xl text-accent absolute right-[10px] cursor-pointer lg:hidden"
+                    onClick={() => setIsSliderOpen(true)}
+                    className="text-2xl text-accent cursor-pointer lg:hidden hover:text-accent-dark transition-colors"
                 />
 
-                <div className="h-full w-[500px] items-center justify-between hidden lg:flex">
-                    <Link
-                        to="/"
-                        className="text-accent font-bold text-xl hover:border-b border-b-accent"
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        to="/products"
-                        className="text-accent font-bold text-xl hover:border-b border-b-accent"
-                    >
-                        Products
-                    </Link>
-                    <Link
-                        to="/about"
-                        className="text-accent font-bold text-xl hover:border-b border-b-accent"
-                    >
-                        About Us
-                    </Link>
-                    <Link
-                        to="/contact"
-                        className="text-accent font-bold text-xl hover:border-b border-b-accent"
-                    >
-                        Contact Us
-                    </Link>
-                </div>
+                {/* Nav Links - desktop */}
+                <nav className="hidden lg:flex items-center gap-8">
+                    {[
+                        { to: "/", label: "Home" },
+                        { to: "/products", label: "Products" },
+                        { to: "/about", label: "About Us" },
+                        { to: "/contact", label: "Contact" },
+                    ].map((link) => (
+                        <Link
+                            key={link.to}
+                            to={link.to}
+                            className="relative text-secondary font-medium text-sm tracking-wide group hover:text-accent transition-colors duration-200"
+                        >
+                            {link.label}
+                            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent rounded-full group-hover:w-full transition-all duration-300" />
+                        </Link>
+                    ))}
+                </nav>
 
-                <div className="absolute w-[300px] h-full flex-row items-center justify-around right-[10px] hidden lg:flex">
+                {/* Auth Buttons - desktop */}
+                <div className="hidden lg:flex items-center gap-3">
                     {!isLoggedIn ? (
                         <>
                             <Link
                                 to="/login"
-                                className="text-white bg-accent p-2 rounded-xl font-bold text-xl hover:bg-accent-light w-30 text-center"
+                                className="px-5 py-2 text-sm font-semibold text-accent border border-accent rounded-full hover:bg-accent hover:text-white transition-all duration-300"
                             >
                                 Login
                             </Link>
                             <Link
                                 to="/signup"
-                                className="text-accent font-bold text-xl border p-2 rounded-xl hover:bg-accent-light w-30 text-center"
+                                className="px-5 py-2 text-sm font-semibold text-white bg-accent-gradient rounded-full hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 transition-all duration-300"
                             >
-                                Signup
+                                Sign Up
                             </Link>
                         </>
                     ) : (
-                        <div className="flex items-center space-x-4 cursor-pointer" >
-                            <div onClick={() => navigate("/profile")} className="flex items-center space-x-2 cursor-pointer">
+                        <div className="flex items-center gap-4">
+                            <div
+                                onClick={() => navigate("/profile")}
+                                className="flex items-center gap-2 cursor-pointer group"
+                            >
                                 <img
                                     src={user?.profilePicture || "/default-profile.jpg"}
                                     alt="Profile"
-                                    className="w-10 h-10 rounded-full"
-                                    
+                                    className="w-9 h-9 rounded-full object-cover ring-2 ring-accent/30 group-hover:ring-accent transition-all duration-300"
                                 />
-                                <span className="text-accent font-bold text-xl">
+                                <span className="text-sm font-semibold text-accent group-hover:text-accent-dark transition-colors">
                                     {user?.firstName || "User"}
                                 </span>
                             </div>
-                            
                             <button
                                 onClick={handleLogout}
-                                className="text-white bg-red-500 p-2 rounded-xl font-bold text-sm hover:bg-red-600"
+                                className="px-4 py-1.5 text-sm font-semibold text-red-600 border border-red-300 rounded-full hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-300"
                             >
                                 Logout
                             </button>

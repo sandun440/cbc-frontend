@@ -1,15 +1,24 @@
 import { AiFillProduct } from "react-icons/ai";
-import { FaHome } from "react-icons/fa";
-import { IoIosContacts, IoMdClose } from "react-icons/io";
+import { FaHome, FaInfoCircle, FaPhoneAlt } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+const navLinks = [
+    { to: "/", label: "Home", icon: <FaHome /> },
+    { to: "/products", label: "Products", icon: <AiFillProduct /> },
+    { to: "/about", label: "About Us", icon: <FaInfoCircle /> },
+    { to: "/contact", label: "Contact Us", icon: <FaPhoneAlt /> },
+];
 
 export default function NavSlider({ closeSlider }) {
     const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [visible, setVisible] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
+        setTimeout(() => setVisible(true), 10);
         const token = localStorage.getItem("token");
         if (token) {
             fetchUserData(token);
@@ -19,11 +28,8 @@ export default function NavSlider({ closeSlider }) {
     const fetchUserData = async (token) => {
         try {
             const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/api/users", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
-
             if (response.ok) {
                 const userData = await response.json();
                 setUser(userData);
@@ -39,60 +45,104 @@ export default function NavSlider({ closeSlider }) {
         }
     };
 
+    const handleClose = () => {
+        setVisible(false);
+        setTimeout(closeSlider, 280);
+    };
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         setUser(null);
         setIsLoggedIn(false);
-        closeSlider(); // Close slider after logout
+        handleClose();
         navigate("/");
     };
 
     return (
-        <div className="fixed w-full h-screen bg-[#00000080] z-[100] lg:hidden">
-            <div className="bg-white w-full h-[100px] relative flex items-center justify-center">
-                <img src="/logo.png" className="absolute h-full rounded-full cursor-pointer left-[10px]" />
-                <IoMdClose onClick={closeSlider} className="text-3xl text-accent absolute right-[10px] cursor-pointer" />
-            </div>
-
-            <div className="bg-white w-[300px] h-[calc(100vh-100px)] flex flex-col justify-between">
-                <div className="h-[200px] flex flex-col ml-2 text-xl text-accent-dark justify-between">
-                    <div className="flex flex-row items-center">
-                        <FaHome />
-                        <Link to="/" onClick={closeSlider} className="text-accent font-bold ml-3 hover:border-b border-b-accent">Home</Link>
+        <div
+            className={`fixed inset-0 z-[100] lg:hidden transition-all duration-300 ${
+                visible ? "bg-black/50 backdrop-blur-sm" : "bg-transparent"
+            }`}
+            onClick={handleClose}
+        >
+            <div
+                className={`absolute left-0 top-0 h-full w-[300px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-out ${
+                    visible ? "translate-x-0" : "-translate-x-full"
+                }`}
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Header */}
+                <div className="h-[80px] flex items-center justify-between px-5 border-b border-accent/15 bg-gradient-to-r from-primary to-cream">
+                    <div className="flex items-center gap-3">
+                        <img src="/logo.png" className="h-12 w-12 rounded-full object-cover ring-2 ring-accent/30" />
+                        <div>
+                            <p className="font-playfair font-bold text-accent text-sm leading-tight">Crystal Beauty</p>
+                            <p className="text-xs text-secondary tracking-widest">CLEAR</p>
+                        </div>
                     </div>
-                    <div className="flex flex-row items-center">
-                        <AiFillProduct />
-                        <Link to="/products" onClick={closeSlider} className="text-accent font-bold ml-3 hover:border-b border-b-accent">Products</Link>
-                    </div>
-                    <div className="flex flex-row items-center">
-                        <IoIosContacts />
-                        <Link to="/about" onClick={closeSlider} className="text-accent font-bold ml-3 hover:border-b border-b-accent">About Us</Link>
-                    </div>
-                    <div className="flex flex-row items-center">
-                        <IoIosContacts />
-                        <Link to="/contact" onClick={closeSlider} className="text-accent font-bold ml-3 hover:border-b border-b-accent">Contact Us</Link>
-                    </div>
+                    <button
+                        onClick={handleClose}
+                        className="w-9 h-9 rounded-full flex items-center justify-center text-secondary hover:bg-accent/10 hover:text-accent transition-all duration-200"
+                    >
+                        <IoMdClose className="text-xl" />
+                    </button>
                 </div>
 
-                <div className="w-[280px] h-[100px] flex flex-col justify-between ml-1 mb-[50px]">
+                {/* Nav Links */}
+                <nav className="flex-1 py-6 px-4 space-y-1">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.to}
+                            to={link.to}
+                            onClick={handleClose}
+                            className="flex items-center gap-4 px-4 py-3 rounded-xl text-secondary hover:bg-accent/8 hover:text-accent font-medium transition-all duration-200 group"
+                        >
+                            <span className="text-accent/60 group-hover:text-accent text-lg transition-colors">
+                                {link.icon}
+                            </span>
+                            {link.label}
+                        </Link>
+                    ))}
+                </nav>
+
+                {/* Auth Section */}
+                <div className="p-5 border-t border-accent/15 space-y-3">
                     {!isLoggedIn ? (
                         <>
-                            <Link to="/login" onClick={closeSlider} className="text-white bg-accent p-2 rounded-xl font-bold text-xl hover:bg-accent-light flex justify-center">Login</Link>
-                            <Link to="/signup" onClick={closeSlider} className="text-accent font-bold text-xl border p-2 rounded-xl hover:bg-accent-light flex justify-center">Signup</Link>
+                            <Link
+                                to="/login"
+                                onClick={handleClose}
+                                className="block w-full text-center py-2.5 text-accent font-semibold border border-accent rounded-xl hover:bg-accent hover:text-white transition-all duration-300"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                to="/signup"
+                                onClick={handleClose}
+                                className="block w-full text-center py-2.5 text-white font-semibold bg-accent-gradient rounded-xl hover:shadow-lg hover:shadow-accent/30 transition-all duration-300"
+                            >
+                                Sign Up
+                            </Link>
                         </>
                     ) : (
-                        <div className="flex flex-col items-center">
-                            <div onClick={() => { navigate("/profile"); closeSlider(); }} className="flex flex-col items-center cursor-pointer">
+                        <div className="space-y-3">
+                            <div
+                                onClick={() => { navigate("/profile"); handleClose(); }}
+                                className="flex items-center gap-3 p-3 rounded-xl bg-accent/6 cursor-pointer hover:bg-accent/12 transition-all duration-200"
+                            >
                                 <img
                                     src={user?.profilePicture || "/default-profile.jpg"}
                                     alt="Profile"
-                                    className="w-16 h-16 rounded-full mb-2"
+                                    className="w-12 h-12 rounded-full object-cover ring-2 ring-accent/30"
                                 />
-                                <span className="text-accent font-bold text-lg">{user?.firstName || "User"}</span>
+                                <div>
+                                    <p className="font-semibold text-accent">{user?.firstName || "User"}</p>
+                                    <p className="text-xs text-secondary">View Profile</p>
+                                </div>
                             </div>
                             <button
                                 onClick={handleLogout}
-                                className="mt-3 text-white bg-red-500 p-2 rounded-xl font-bold text-sm hover:bg-red-600 w-full"
+                                className="w-full py-2.5 text-red-600 font-semibold border border-red-300 rounded-xl hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-300"
                             >
                                 Logout
                             </button>
