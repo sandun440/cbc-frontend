@@ -7,93 +7,72 @@ import { useNavigate } from "react-router-dom";
 export default function AdminUserDetails() {
   const [users, setUsers] = useState([]);
   const [usersLoaded, setUsersLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!usersLoaded) {
-      axios
-        .get(import.meta.env.VITE_BACKEND_URL + "/api/users/customers")
-        .then((res) => {
-          setUsers(res.data);
-          setUsersLoaded(true);
-        })
-        .catch(() => {
-          toast.error("Failed to load users");
-        });
+      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/users/customers")
+        .then((res) => { setUsers(res.data); setUsersLoaded(true); })
+        .catch(() => toast.error("Failed to load users"));
     }
   }, [usersLoaded]);
 
-  const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="p-6 lg:p-10 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-10">
-          <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight">
-            Manage Customers
-          </h1>
-          <p className="text-slate-600 mt-2 text-lg">View and control customer accounts</p>
-        </div>
+    <div className="space-y-5">
+      {/* Header */}
+      <div>
+        <h2 className="font-playfair text-2xl font-bold text-dark">Customers</h2>
+        <p className="text-secondary text-sm mt-1">{users.length} registered customers</p>
+      </div>
 
-        {/* Table Card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-          {usersLoaded ? (
+      {/* Table Card */}
+      <div className="bg-white rounded-2xl shadow-sm border border-accent/8 overflow-hidden">
+        {usersLoaded ? (
+          users.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-gradient-to-r from-slate-800 to-slate-900 text-white uppercase text-xs tracking-wider">
-                    <th className="px-8 py-5 text-left font-semibold">First Name</th>
-                    <th className="px-8 py-5 text-left font-semibold">Last Name</th>
-                    <th className="px-8 py-5 text-left font-semibold">Email</th>
-                    <th className="px-8 py-5 text-left font-semibold">Account Type</th>
-                    <th className="px-8 py-5 text-center font-semibold">Status</th>
-                    <th className="px-8 py-5 text-center font-semibold">Actions</th>
+                  <tr className="bg-[#1a1008] text-white text-xs uppercase tracking-wider">
+                    <th className="px-5 py-4 text-left">Customer</th>
+                    <th className="px-5 py-4 text-left">Email</th>
+                    <th className="px-5 py-4 text-center">Type</th>
+                    <th className="px-5 py-4 text-center">Status</th>
+                    <th className="px-5 py-4 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200">
+                <tbody className="divide-y divide-gray-50">
                   {users.map((user, index) => (
-                    <tr
-                      key={index}
-                      className="hover:bg-slate-50 transition-all duration-200 group"
-                    >
-                      <td className="px-8 py-6 font-medium text-slate-800">
-                        {user.firstName}
+                    <tr key={index} className="hover:bg-primary/40 transition-colors duration-150">
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-accent-gradient flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                            {user.firstName?.charAt(0)?.toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-dark text-sm">{user.firstName} {user.lastName}</p>
+                          </div>
+                        </div>
                       </td>
-                      <td className="px-8 py-6 font-medium text-slate-800">
-                        {user.lastName}
-                      </td>
-                      <td className="px-8 py-6 text-slate-600">
-                        {user.email}
-                      </td>
-                      <td className="px-8 py-6">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <td className="px-5 py-4 text-secondary text-sm">{user.email}</td>
+                      <td className="px-5 py-4 text-center">
+                        <span className="inline-flex px-2.5 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full">
                           {user.type}
                         </span>
                       </td>
-                      <td className="px-8 py-6 text-center">
-                        <span
-                          className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide ${
-                            user.isBlocked
-                              ? "bg-red-100 text-red-800"
-                              : "bg-green-100 text-green-800"
-                          }`}
-                        >
+                      <td className="px-5 py-4 text-center">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.isBlocked ? "bg-red-100 text-red-700" : "bg-emerald-100 text-emerald-700"
+                        }`}>
                           {user.isBlocked ? "Blocked" : "Active"}
                         </span>
                       </td>
-                      <td className="px-8 py-6 text-center">
+                      <td className="px-5 py-4 text-center">
                         <button
-                          onClick={() => {
-                            navigate("/admin/customers/editUser", {
-                              state: {
-                                user: users.find((u) => u.email === user.email),
-                              },
-                            });
-                          }}
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 transform hover:scale-110 transition-all duration-200 shadow-md hover:shadow-lg"
+                          onClick={() => navigate("/admin/customers/editUser", { state: { user } })}
+                          className="w-8 h-8 rounded-full bg-accent/10 text-accent hover:bg-accent hover:text-white flex items-center justify-center mx-auto transition-all duration-200"
                           title="Edit User"
                         >
-                          <FaPencil size={16} />
+                          <FaPencil size={13} />
                         </button>
                       </td>
                     </tr>
@@ -102,20 +81,14 @@ export default function AdminUserDetails() {
               </table>
             </div>
           ) : (
-            <div className="flex items-center justify-center py-24">
-              <div className="relative">
-                <div className="w-20 h-20 border-4 border-slate-200 rounded-full animate-spin"></div>
-                <div className="absolute top-0 left-0 w-20 h-20 border-4 border-transparent border-t-blue-600 rounded-full animate-spin"></div>
-              </div>
+            <div className="text-center py-20">
+              <p className="font-playfair text-xl text-dark">No customers yet</p>
+              <p className="text-secondary text-sm mt-2">Customers will appear here after signup.</p>
             </div>
-          )}
-        </div>
-
-        {/* Optional: Empty state */}
-        {usersLoaded && users.length === 0 && (
-          <div className="text-center py-16 text-slate-500">
-            <p className="text-xl font-medium">No customers found</p>
-            <p className="mt-2">When customers sign up, they will appear here.</p>
+          )
+        ) : (
+          <div className="flex justify-center items-center py-24">
+            <div className="w-10 h-10 border-4 border-accent/20 border-t-accent rounded-full animate-spin" />
           </div>
         )}
       </div>

@@ -3,9 +3,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import uploadMediaToSupabase from "../../utils/mediaUpload";
+import { FaArrowLeft } from "react-icons/fa";
+
+const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-primary/40 text-dark placeholder-gray-400 text-sm transition-all duration-200";
+const labelClass = "block text-xs font-semibold text-secondary mb-1.5 uppercase tracking-wide";
 
 export default function AddProductForm() {
-
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [alternativeNames, setAlternativeNames] = useState("");
@@ -14,165 +17,96 @@ export default function AddProductForm() {
     const [lastPrice, setLastPrice] = useState("");
     const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const navigate = useNavigate();
 
-    async function handleSubmit(){
-        const altnames = alternativeNames.split(",");
-
-        const promisesArray = [];
-
-        for(let i = 0; i < imageFiles.length; i++){
-          promisesArray[i] = uploadMediaToSupabase(imageFiles[i]);
-          
-        }
-        
-        const imgUrls = await Promise.all(promisesArray);
-
-        const product = {
-            productId : productId,
-            productName : productName,
-            altNames : altnames,
-            images : imgUrls,
-            price : price,
-            lastPrice : lastPrice,
-            stock : stock,
-            description : description
-        }
-
-        const token = localStorage.getItem("token");
-  
+    async function handleSubmit() {
+        setIsSubmitting(true);
         try {
-            await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/products", product, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            })
+            const altnames = alternativeNames.split(",");
+            const promisesArray = Array.from(imageFiles).map((f) => uploadMediaToSupabase(f));
+            const imgUrls = await Promise.all(promisesArray);
+
+            const product = { productId, productName, altNames: altnames, images: imgUrls, price, lastPrice, stock, description };
+            const token = localStorage.getItem("token");
+            await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/products", product, {
+                headers: { Authorization: "Bearer " + token }
+            });
             navigate("/admin/products");
             toast.success("Product added successfully");
-        }catch(err){
+        } catch (err) {
             toast.error("Failed to add product");
+        } finally {
+            setIsSubmitting(false);
+        }
     }
-}
-
 
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-        <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md border border-gray-300">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-            Add Product
-          </h1>
-  
-          <div className="space-y-4">
-            {/* Product ID */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Product ID</label>
-              <input 
-                type="text" 
-                placeholder="Enter product ID"
-                value={productId}
-                onChange={(e) => setProductId(e.target.value)}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-              />
-            </div>
-  
-            {/* Product Name */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Product Name</label>
-              <input 
-                type="text" 
-                placeholder="Enter product name"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-              />
-            </div>
-  
-            {/* Alternative Names */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Alternative Names</label>
-              <input 
-                type="text" 
-                placeholder="Enter alternative names"
-                value={alternativeNames}
-                onChange={(e) => setAlternativeNames(e.target.value)}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-              />
-            </div>
-  
-            {/* Image URLs */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Images</label>
-              <input 
-                type="file" 
-                placeholder="Enter image URLs (commas separated)"
-
-                onChange={(e) => {
-                  setImageFiles(e.target.files);
-                }}
-                multiple
-                className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-              />
-            </div>
-  
-            {/* Price and Last Price in one row */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col">
-                <label className="text-gray-600 font-medium">Price</label>
-                <input 
-                  type="number" 
-                  placeholder="Enter price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-                />
-              </div>
-  
-              <div className="flex flex-col">
-                <label className="text-gray-600 font-medium">Last Price</label>
-                <input 
-                  type="number" 
-                  placeholder="Enter last price"
-                  value={lastPrice}
-                  onChange={(e) => setLastPrice(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-                />
-              </div>
-            </div>
-  
-            {/* Stock */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Stock</label>
-              <input 
-                type="number" 
-                placeholder="Enter stock quantity"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none"
-              />
-            </div>
-  
-            {/* Description */}
-            <div className="flex flex-col">
-              <label className="text-gray-600 font-medium">Description</label>
-              <textarea 
-                placeholder="Enter product description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-2 h-24 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none resize-none"
-              ></textarea>
-            </div>
-  
-            {/* Submit Button */}
-            <button 
-              type="submit"
-              className="w-full bg-blue-500 text-white font-semibold p-2 rounded-lg hover:bg-blue-600 transition duration-300"
-              onClick={handleSubmit}
-            >
-              Add Product
+        <div className="max-w-xl">
+            {/* Back */}
+            <button onClick={() => navigate("/admin/products")} className="flex items-center gap-2 text-secondary text-sm hover:text-accent transition-colors mb-5">
+                <FaArrowLeft size={12} /> Back to Products
             </button>
-          </div>
+
+            <div className="bg-white rounded-2xl shadow-sm border border-accent/8 overflow-hidden">
+                {/* Header */}
+                <div className="bg-[#1a1008] px-6 py-5">
+                    <h2 className="font-playfair text-xl font-bold text-white">Add New Product</h2>
+                    <p className="text-white/50 text-xs mt-1">Fill in the details below to add a product</p>
+                </div>
+
+                {/* Form */}
+                <div className="p-6 space-y-4">
+                    <div>
+                        <label className={labelClass}>Product ID</label>
+                        <input type="text" placeholder="e.g. CBC-001" value={productId} onChange={(e) => setProductId(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Product Name</label>
+                        <input type="text" placeholder="Enter product name" value={productName} onChange={(e) => setProductName(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Alternative Names <span className="text-secondary/50 normal-case">(comma separated)</span></label>
+                        <input type="text" placeholder="name1, name2, name3" value={alternativeNames} onChange={(e) => setAlternativeNames(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Product Images</label>
+                        <input type="file" multiple accept="image/*" onChange={(e) => setImageFiles(e.target.files)} className={inputClass + " cursor-pointer file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-accent/10 file:text-accent"} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className={labelClass}>Price (LKR)</label>
+                            <input type="number" placeholder="0.00" value={price} onChange={(e) => setPrice(e.target.value)} className={inputClass} />
+                        </div>
+                        <div>
+                            <label className={labelClass}>Sale Price (LKR)</label>
+                            <input type="number" placeholder="0.00" value={lastPrice} onChange={(e) => setLastPrice(e.target.value)} className={inputClass} />
+                        </div>
+                    </div>
+                    <div>
+                        <label className={labelClass}>Stock Quantity</label>
+                        <input type="number" placeholder="0" value={stock} onChange={(e) => setStock(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Description</label>
+                        <textarea placeholder="Product description..." value={description} onChange={(e) => setDescription(e.target.value)} rows={4} className={inputClass + " resize-none"} />
+                    </div>
+
+                    <div className="flex gap-3 pt-2">
+                        <button onClick={() => navigate("/admin/products")} className="flex-1 py-3 border border-gray-200 text-secondary font-semibold rounded-xl hover:bg-gray-50 text-sm transition-colors">
+                            Cancel
+                        </button>
+                        <button
+                            onClick={handleSubmit}
+                            disabled={isSubmitting}
+                            className="flex-1 py-3 bg-accent-gradient text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-accent/30 text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? "Adding..." : "Add Product"}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     );
-  }
+}
